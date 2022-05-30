@@ -1,1 +1,2 @@
-PyJWT
+# https://pyjwt.readthedocs.io/en/stable/installation.html#installation-cryptography
+pyjwt[crypto]~=2.4.0
