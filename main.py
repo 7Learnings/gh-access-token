@@ -20,9 +20,9 @@ def b64(b: typing.Union[str, bytes]) -> str:
         b = b.encode()
     return base64.urlsafe_b64encode(b).decode().rstrip('=')
 
-# https://stackoverflow.com/a/62646786/2371032
-now = int(time.time())
-expiration = 300
+# https://stackoverflow.com/a/62646786/2371032, leave 15s slack for clock drift (see #7379)
+now = int(time.time()) - 15
+expiration = 60
 header=dict(alg='RS256')
 payload = dict(iat=now, exp=now + expiration, iss=GITHUB_APP_IDENTIFIER)
 enc=f"{b64(json.dumps(header))}.{b64(json.dumps(payload))}"
