@@ -11,8 +11,9 @@ from urllib.request import Request, urlopen
 
 
 GITHUB_APP_PRIVATE_KEY = os.environ['APP_PRIVATE_KEY']
-GITHUB_APP_IDENTIFIER = 124662
-GITHUB_INSTALLATION_ID = 18015726
+# https://github.com/organizations/7Learnings/settings/installations/18015726
+GITHUB_APP_IDENTIFIER = os.getenv('GITHUB_APP_IDENTIFIER', 124662)
+GITHUB_INSTALLATION_ID = os.getenv('GITHUB_INSTALLATION_ID', 18015726)
 
 # https://jwt.io/introduction
 def b64(b: typing.Union[str, bytes]) -> str:
