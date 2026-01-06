@@ -1,0 +1,32 @@
+name: authorize
+description: Authorize github
+inputs:
+  app_private_key:
+    description: "Github app private key"
+    required: true
+  github_app_identifier:
+    description: "Github app identifier"
+    required: true
+  github_installation_id:
+    description: "Github installation id"
+    required: true
+
+
+outputs:
+  token:
+    description: "github token"
+    value: ${{ steps.auth.outputs.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Authorize GitHub
+      id: auth
+      shell: bash
+      env:
+        APP_PRIVATE_KEY: ${{ inputs.app_private_key }}
+        GITHUB_APP_IDENTIFIER: ${{ inputs.github_app_identifier }}
+        GITHUB_INSTALLATION_ID: ${{ inputs.github_installation_id }}
+      run: |
+        token=$(python ${{ github.action_path }}/main.py)
+        echo "token=$token" >> $GITHUB_OUTPUT
