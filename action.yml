@@ -4,8 +4,8 @@ inputs:
   app_private_key:
     description: "Github app private key"
     required: true
-  github_app_identifier:
-    description: "Github app identifier"
+  github_client_id:
+    description: "Github app client id"
     required: true
   github_installation_id:
     description: "Github installation id"
@@ -28,7 +28,8 @@ runs:
       shell: bash
       env:
         APP_PRIVATE_KEY: ${{ inputs.app_private_key }}
-        GITHUB_APP_IDENTIFIER: ${{ inputs.github_app_identifier }}
+        # https://github.blog/changelog/2024-05-01-github-apps-can-now-use-the-client-id-to-fetch-installation-tokens/
+        GITHUB_APP_IDENTIFIER: ${{ inputs.github_client_id }}
         GITHUB_INSTALLATION_ID: ${{ inputs.github_installation_id }}
       run: |
         token=$(python ${{ github.action_path }}/main.py)
