@@ -10,6 +10,9 @@ inputs:
   github_installation_id:
     description: "Github installation id"
     required: true
+  export_environment_variables:
+    description: "Export token as environment variable (GH_TOKEN)"
+    default: false
 
 
 outputs:
@@ -30,3 +33,9 @@ runs:
       run: |
         token=$(python ${{ github.action_path }}/main.py)
         echo "token=$token" >> $GITHUB_OUTPUT
+
+    - name: Export Token
+      if: inputs.export_environment_variables
+      shell: bash
+      run: |
+        echo "GH_TOKEN=${{ steps.auth.outputs.token }}" >> $GITHUB_ENV
