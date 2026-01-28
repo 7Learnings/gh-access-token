@@ -12,8 +12,7 @@ inputs:
     required: true
   export_environment_variables:
     description: "Export token as environment variable (GH_TOKEN)"
-    default: false
-
+    default: 'false'
 
 outputs:
   token:
@@ -36,7 +35,7 @@ runs:
         echo "token=$token" >> $GITHUB_OUTPUT
 
     - name: Export Token
-      if: inputs.export_environment_variables
+      if: inputs.export_environment_variables != 'false'
       shell: bash
       run: |
         echo "GH_TOKEN=${{ steps.auth.outputs.token }}" >> $GITHUB_ENV
